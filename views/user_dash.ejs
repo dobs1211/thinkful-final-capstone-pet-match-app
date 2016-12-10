@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="DogAdoptionApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Welcome Back!</title>
+	<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+	<script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+	<script src="/js/main.js"></script>
+	<script src="/js/dog_app.js"></script>
+	<script type="text/javascript" src="/js/users_controller.js"></script>
+	<link rel="stylesheet" type="text/css" href="/dist/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+	
+	<div class="header"><img src="/images/site_logo.png"></div>
+	<h2 class="center">Welcome back, <%= name %>!</h2>
+	
+	<% if (message) { %>
+      <h3 class="flash"><%= message %></h3>
+  <% } %>
+  
+  <div id="container-edit-profile">
+		<div class="modal">
+			<form method="POST" action="/users/<%= id %>?_method=PATCH">
+			  <div class="ui form">
+          <div class="field">
+            <label>Name</label>
+            <div class="ui left icon input">
+              <input name="name" type="text" value="<%= name %>">
+            </div>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <div class="ui left icon input">
+              <input name="email" type="text" value="<%= email %>">
+              <i class="user icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="ui left icon input">
+              <input name="password" type="password" placeholder="Password">
+              <i class="lock icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <label for="password_confirm">Password Confirmation</label>
+            <div class="ui left icon input">
+              <input name="password_confirm" type="password" placeholder="Confirm Password">
+              <i class="lock icon"></i>
+            </div>
+          </div>
+          <input name="id" type="hidden" value="<%= id %>">
+          <button id="#close-edit-profile" class="ui teal submit button">Update</button>
+        </div>
+			</form>
+		</div>
+	</div>
+
+	<div ng-controller="UsersController as users">
+
+		<div ng-switch on="users.click">
+			<div class="nav">
+				<div class="ui secondary pointing menu">
+				  <a class="item" href="/user_dash">Find Pups!</a>
+				  <a class="item" ng-click="users.userChoice('profile')" href="#">View Profile</a>
+				  <a class="item" href="#" id="edit-profile-show">Update Profile</a>
+					<a class="item" ng-click="users.userChoice('favorites')" href="#">View Favorite Pups</a>
+					<div class="right menu">
+						<a class="item" href="/logout">Log Out</a>
+					</div>
+				</div>
+			</div>
+
+		  <div ng-switch-when="profile">
+		    <div class="search">
+			    <h2> Name: {{users.profileInfo.name}} </h2>
+					<h3> Email: {{users.profileInfo.email}} </h3>
+					<button class="ui teal submit button" ng-click="users.deleteProfile(users.profileInfo._id)">Delete Profile</button>
+				</div>
+			</div> <!-- profile switch div -->
+
+
+			<div ng-switch-when="favorites">
+				<!-- insert dogs here -->
+				<ul>
+					<li ng-repeat="dog in users.favDogs">
+					  <div class="center-card">
+		          <div class="ui card raised segment">
+		            <div class="image">
+		              <img src="{{dog.pic}}">
+		            </div>
+		            <div class="content">
+		              <a class="header">Meet <i>{{dog.name}}</i></a>
+		              <div class="meta">
+		                <span class="date"><strong>Age:</strong> {{dog.age}}</span><br>
+		                <span class="date"><strong>Breed:</strong> {{dog.breed}}</span>
+		              </div>
+		              <div class="description">
+		                <strong>Description:</strong> {{dog.info}}
+		              </div>
+		            </div>
+		            <div class="extra content">
+		              <strong>Email for more info:</strong> <a href="mailto:{{dog.contact}}">{{dog.contact}}</a><br>
+		              <strong>View on Petfinder:</strong> <a href="http://www.petfinder.com/petdetail/{{dog.petfinder_id}}" target="_blank">Sponsor me! Better yet, adopt me!</a>
+		            </div>
+        				<button class="ui teal submit labeled icon button" ng-click="users.removeFavs(users.profileInfo._id, dog)">Remove from favorites<i class="fav red heart icon"></i></button>
+        			</div>
+		        </div>
+		        <br> 
+					</li>
+				</ul>
+			</div>
+
+			<div ng-switch-default> <!-- ng-switch-default -->
+		    <div class="search">
+				  <h1 class="center">Answer Our Questionnaire to Find Your Paw-rfect Fit</h1>
+				
+		      <form ng-submit="users.search()">
+		        <div class="ui form">
+		          <div class="field">
+		            <label>Your Zipcode</label>
+		            <div class="ui input">
+		              <input name="zipcode" type="text" ng-model="users.zipcode" placeholder="Zipcode">
+		            </div>
+		          </div>
+		          <div class="field">
+		            <label>Your Residence</label>
+		              <select class="ui dropdown left icon" name="residence-type" ng-model="users.residenceType">
+		                <option value="">Select Your Residence Type</option>
+		                <option value="apartment">Apartment</option>
+		                <option value="apartment-w-dogrun">Apartment with a dog run</option>
+		                <option value="condo">Condo</option>
+		                <option value="townhouse">Townhouse with yard</option>
+		                <option value="single-fam-home">Single family home (small yard)</option>
+		                <option value="single-fam-home-w-yard">Single family home with fenced yard</option>
+		              </select>
+		          </div>    
+		          <button class="ui teal submit button">Submit Questionnaire</button>
+		        </div>
+		      </form>
+		    </div> <!-- close search div -->
+
+
+    		<ul>
+      		<li ng-repeat="dog in users.searchList">
+        		<div class="center-card">
+		          <div class="ui card raised segment">
+		            <div class="image">
+		              <img src="{{dog.media.photos.photo[2].$t}}">
+		            </div>
+		            <div class="content">
+		              <a class="header">Meet <i>{{dog.name.$t}}</i></a>
+		              <div class="meta">
+		                <span class="date"><strong>Age:</strong> {{dog.age.$t}}</span><br>
+		                <span class="date"><strong>Breed:</strong> {{dog.breeds.breed}}</span>
+		              </div>
+		              <div class="description">
+		                <strong>Description:</strong> {{dog.description.$t}}
+		              </div>
+		            </div>
+		            <div class="extra content">
+		              <strong>Email for more info:</strong> <a href="mailto:{{dog.contact.email.$t}}">{{dog.contact.email.$t}}</a><br>
+		              <strong>View on Petfinder:</strong> <a href="http://www.petfinder.com/petdetail/{{dog.id.$t}}" target="_blank">Sponsor me! Better yet, adopt me!</a>
+		            </div>
+				          <!-- <button type="button" ng-if="!love" ng-click="users.toggleButtons()"> -->
+				           	<button class="ui teal submit labeled icon button" ng-click="users.addFavs(users.profileInfo._id, dog)">Add to favorites<i class="fav empty heart icon"></i>
+				           	</button>
+				          <!-- </button>
+				          <button type="button" ng-if="love" ng-click-"users.toggleButtons()">
+				           	<span class="ui teal submit labeled icon button" ng-click="users.removeFavs(users.profileInfo._id, dog)">Remove from favorites<i class="fav red heart icon"></i>
+				          	</span>
+				          </button> -->
+		          </div>
+		        </div>
+		        <br>  
+      		</li>
+    		</ul>
+    	</div> <!-- default switch div -->
+
+    </div> <!-- switch div -->
+
+	</div> <!-- controller div -->
+
+  <footer class="flash">
+    <p class="footer">&copy; Nush Designs</p> 
+    Powered by Petfinder
+  </footer>
+
+</body>
+</html>

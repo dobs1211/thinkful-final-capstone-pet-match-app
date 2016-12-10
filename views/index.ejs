@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="DogAdoptionApp">
+<head>
+	<meta charset="UTF-8">
+	<title>adopt-a-pup</title>
+	<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+	<script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+  <script src="/js/main.js"></script>
+	<script src="/js/dog_app.js"></script>
+	<script type="text/javascript" src="/js/users_controller.js"></script>
+  <link rel="stylesheet" type="text/css" href="/dist/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+	
+	<div class="header"><img src="/images/site_logo.png"></div>
+
+  <% if (message) { %>
+      <h3 class="flash"><%= message %></h3>
+  <% } %>
+  
+  <div class="ui two column padded middle aligned grid">
+    <div class="two column row">
+      <div class="column">
+        <form action="/login" method="POST">
+          <div class="ui form">
+            <div class="field">
+              <label>Email</label>
+              <div class="ui left icon input">
+                <input name="email" type="text" placeholder="Email">
+                <i class="user icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <label>Password</label>
+              <div class="ui left icon input">
+                <input name="password" type="password">
+                <i class="lock icon"></i>
+              </div>
+            </div>
+            <button class="ui teal submit button">Login</button>
+          </div>
+        </form>
+      </div>
+      <div class="ui vertical divider">
+        Or
+      </div>
+      <div class="center aligned column">
+        <div id="new-user-show" class="ui big teal labeled icon button">
+          <i class="signup icon"></i>
+            Sign Up
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div id="container-new-user" class>
+      <div class="modal">
+        <form action="/users" method="POST">
+          <div class="ui form">
+            <div class="field">
+              <label>Name</label>
+              <div class="ui left icon input">
+                <input name="name" type="text" placeholder="Name">
+              </div>
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <div class="ui left icon input">
+                <input name="email" type="text" placeholder="Email">
+                <i class="user icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <label for="password">Password</label>
+              <div class="ui left icon input">
+                <input name="password" type="password" placeholder="Password">
+                <i class="lock icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <label for="password_confirm">Password Confirmation</label>
+              <div class="ui left icon input">
+                <input name="password_confirm" type="password" placeholder="Confirm Password">
+                <i class="lock icon"></i>
+              </div>
+            </div>
+            <button id="#close-new-user" class="ui teal submit button">Create Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+	<div ng-controller="UsersController as users">
+    
+    <div class="search">
+		  <h1 class="center">Answer Our Questionnaire to Find Your Paw-rfect Fit</h1>
+		
+      <form ng-submit="users.search()">
+        <div class="ui form">
+          <div class="field">
+            <label>Your Zipcode</label>
+            <div class="ui input">
+              <input name="zipcode" type="text" ng-model="users.zipcode" placeholder="Zipcode">
+            </div>
+          </div>
+          <div class="field">
+            <label>Your Residence</label>
+              <select class="ui dropdown left icon" name="residence-type" ng-model="users.residenceType">
+                <option value="">Select Your Residence Type</option>
+                <option value="apartment">Apartment</option>
+                <option value="apartment-w-dogrun">Apartment with a dog run</option>
+                <option value="condo">Condo</option>
+                <option value="townhouse">Townhouse with yard</option>
+                <option value="single-fam-home">Single family home (small yard)</option>
+                <option value="single-fam-home-w-yard">Single family home with fenced yard</option>
+              </select>
+          </div>    
+          <button class="ui teal submit button">Submit Questionnaire</button>
+        </div>
+      </form>
+    </div> <!-- close search div -->
+
+    <ul>
+      <li ng-repeat="dog in users.searchList">
+        <div class="center-card">
+          <div class="ui card raised segment">
+            <div class="image">
+              <img src="{{dog.media.photos.photo[2].$t}}">
+            </div>
+            <div class="content">
+              <a class="header">Meet <i>{{dog.name.$t}}</i></a>
+              <div class="meta">
+                <span class="date"><strong>Age:</strong> {{dog.age.$t}}</span><br>
+                <span class="date"><strong>Breed:</strong> {{dog.breeds.breed}}</span>
+              </div>
+              <div class="description">
+                <strong>Description:</strong> {{dog.description.$t}}
+              </div>
+            </div>
+            <div class="extra content">
+              <strong>Email for more info:</strong> <a href="mailto:{{dog.contact.email.$t}}">{{dog.contact.email.$t}}</a><br>
+              <strong>View on Petfinder:</strong> <a href="http://www.petfinder.com/petdetail/{{dog.id.$t}}" target="_blank">Sponsor me! Better yet, adopt me!</a>
+            </div>
+          </div>
+        </div>
+        <br>        
+      </li>
+    </ul>
+
+	</div>
+
+  <footer class="flash">
+    <p class="footer">&copy; Nush Designs</p> 
+    Powered by Petfinder
+  </footer>
+
+</body>
+</html>
