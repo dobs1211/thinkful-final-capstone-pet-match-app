@@ -84,8 +84,8 @@
 
 			<div ng-switch-when="favorites">
 				<!-- insert dogs here -->
-				<ul>
-					<li ng-repeat="dog in users.favDogs">
+				<ul class="four column doubling stackable grid container">
+					<li ng-repeat="dog in users.favDogs" class="column">
 					  <div class="center-card">
 		          <div class="ui card raised segment">
 		            <div class="image">
@@ -143,8 +143,8 @@
 		    </div> <!-- close search div -->
 
 
-    		<ul>
-      		<li ng-repeat="dog in users.searchList">
+    		<ul class="four column doubling stackable grid container">
+      		<li ng-repeat="dog in users.searchList"  class="column">
         		<div class="center-card">
 		          <div class="ui card raised segment">
 		            <div class="image">
@@ -183,10 +183,7 @@
 
 	</div> <!-- controller div -->
 
-  <footer class="flash">
-    <p class="footer">&copy; Nush Designs</p> 
-    Powered by Petfinder
-  </footer>
+
 
 </body>
 </html>
