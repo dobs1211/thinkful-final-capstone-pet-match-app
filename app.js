@@ -80,6 +80,16 @@ app.post('/', function(req, res){
   } else if (residenceType === 'single-fam-home-w-yard'){
   	var size = 'XL';
   }
+  
+  if (residenceType === 'apartment'){
+  	var size = 'S';
+  } else if (residenceType === 'apartment-w-dogrun' || residenceType === 'condo') {
+  	var size = 'M';
+  } else if (residenceType === 'townhouse' || residenceType === 'single-fam-home') {
+  	var size = 'L';
+  } else if (residenceType === 'single-fam-home-w-yard'){
+  	var size = 'XL';
+  }
 
   petfinder.get(zipcode, size, function(results) {
     res.json(results);
