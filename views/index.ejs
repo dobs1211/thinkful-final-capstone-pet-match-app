@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="DogAdoptionApp">
+<html lang="en" id="html" style="background: rgba(0, 0, 0, 0) url('../images/blackwhitedog.jpg') no-repeat center center fixed;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+<html lang="en" ng-app="Pet Match App">
 <head>
 	<meta charset="UTF-8">
 	<title>adopt-a-pup</title>
@@ -13,7 +14,7 @@
 </head>
 <body>
 	
-	<div class="header"><img src="/images/site_logo.png"></div>
+	<!--<div class="header"><img src="/images/site_logo.png"></div>-->
 
   <% if (message) { %>
       <h3 class="flash"><%= message %></h3>
@@ -94,8 +95,8 @@
 	<div ng-controller="UsersController as users">
     
     <div class="search">
-		  <h1 class="center">Answer Our Questionnaire to Find Your Paw-rfect Fit</h1>
-		
+		  <h1 class="center">A place where you can find a canine friend best suited for you! You will be asked a series of questions. For each question, select the response that best applies to you.</h1>
+		  
       <form ng-submit="users.search()">
         <div class="ui form">
           <div class="field">
@@ -150,10 +151,5 @@
 
 	</div>
 
-  <footer class="flash">
-    <p class="footer">&copy; Nush Designs</p> 
-    Powered by Petfinder
-  </footer>
-
-</body>
+  </body>
 </html>

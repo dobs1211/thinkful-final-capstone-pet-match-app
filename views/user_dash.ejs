@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="DogAdoptionApp">
-<head>
+<html lang="en" ng-app="Dog Match">
+	
+
+head>
 	<meta charset="UTF-8">
 	<title>Welcome Back!</title>
 	<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
@@ -116,6 +118,8 @@
 			<div ng-switch-default> <!-- ng-switch-default -->
 		    <div class="search">
 				  <h1 class="center">Answer Our Questionnaire to Find Your Paw-rfect Fit</h1>
+				  <p>A place where you can find a canine friend best suited for you! You will be asked a series of questions. For each question, select the response that best applies to you.
+        </p>
 				
 		      <form ng-submit="users.search()">
 		        <div class="ui form">
@@ -125,7 +129,17 @@
 		              <input name="zipcode" type="text" ng-model="users.zipcode" placeholder="Zipcode">
 		            </div>
 		          </div>
-		          <div class="field">
+		          <div class="question1">
+		            <label>Your Home</label>
+		              <select class="ui dropdown left icon" name="residence-type" ng-model="users.residenceType">
+		                <option value="">Select the best answer</option>
+		                <option value="single-fam-home-w-yard">1</option>
+		                <option value="small-home-no-yard">3</option>
+		                <option value="single-fam-home">2</option>
+		              </select>
+		          </div>  
+		          
+		          <div class="question2">
 		            <label>Your Residence</label>
 		              <select class="ui dropdown left icon" name="residence-type" ng-model="users.residenceType">
 		                <option value="">Select Your Residence Type</option>
@@ -137,6 +151,7 @@
 		                <option value="single-fam-home-w-yard">Single family home with fenced yard</option>
 		              </select>
 		          </div>    
+		          
 		          <button class="ui teal submit button">Submit Questionnaire</button>
 		        </div>
 		      </form>
