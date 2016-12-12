@@ -20,7 +20,7 @@ var authenticateUser = function(email, password, callback) {
         callback(false);
         }
       });
-    } else {
+    } else { 
       // no user with that email
       callback(false);
     }
