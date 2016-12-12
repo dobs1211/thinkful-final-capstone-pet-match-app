@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" id="html" style="background: rgba(0, 0, 0, 0) url('../images/blackwhitedog.jpg') no-repeat center center fixed;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
-<html lang="en" ng-app="Dog Match">
+<html lang="en" ng-app="DogAdoptionApp">
 <head>
 	<meta charset="UTF-8">
 	<title>adopt-a-pup</title>
@@ -14,6 +13,8 @@
 </head>
 <body>
 	
+	<div class="header"><img src="/images/site_logo.png"></div>
+
   <% if (message) { %>
       <h3 class="flash"><%= message %></h3>
   <% } %>
@@ -92,123 +93,11 @@
   
 	<div ng-controller="UsersController as users">
     
-    <div class="search">
-		  <h1 class="center">A place where you can find a canine friend best suited for you! You will be asked a series of questions. For each question, select the response that best applies to you.</h1>
-		  
-      <form ng-submit="users.search()">
-        <div class="ui form">
-          <div class="field">
-            <label>Your Zipcode</label>
-            <div class="ui input">
-              <input name="zipcode" type="text" ng-model="users.zipcode" placeholder="Zipcode">
-            </div>
-          </div>
-          <div class="question1">
-		            <label>Your home is dog proofed and has a yard.</label>
-		              <select class="ui dropdown left icon" name="residence-type" ng-model="users.residenceType">
-		                <option value="">Select the best answer</option>
-		                <option value="single-fam-home-w-yard">1. Very much like me</option>
-		                <option value="small-home-no-yard">2. Somewhat like me</option>
-		                <option value="single-fam-home">3. Not like me at all</option>
-		              </select>
-		          </div>  
-          
-          <div class="question2">
-		            <label>You will make time to exercise your dog.</label>
-		              <select class="ui dropdown left icon" name="Level of Energy" ng-model="users.levelEnergy">
-		                <option value="">Select the best answer</option>
-		                <option value="I like to excercise most days of the week">1. Very much like me</option>
-		                <option value="I exercise every once in a while">2. Somewhat like me</option>
-		                <option value="Sitting on the couch is my forte">3. Not like me at all</option>
-		              </select>
-		          </div>    
-		          
-		          <div class="question3">
-		            <label>You like to keep house clean, free of messes and dust.</label>
-		              <select class="ui dropdown left icon" name="Cleanliness" ng-model="users.levelCleanliness">
-		                <option value="">Select the best answer</option>
-		                <option value="I am very clean">1. Very much like me</option>
-		                <option value="I don't mind messes every once in a while">2. Somewhat like me</option>
-		                <option value="Bring on the mess">3. Not like me at all</option>
-		              </select>
-		          </div>    
-		          
-		          <div class="question4">
-		            <label>You will train your dog to learn simple commands.</label>
-		              <select class="ui dropdown left icon" name="Smarts" ng-model="users.smartBreed">
-		                <option value="">Select the best answer</option>
-		                <option value="I want a dog that can learn quick">1. Very much like me</option>
-		                <option value="I just want a dog that knows a few tricks">2. Somewhat like me</option>
-		                <option value="No level of intelligence is necessary">3. Not like me at all</option>
-		              </select>
-		          </div>    
-		          
-		          
-		          <div class="question5">
-		            <label>You want a dog to be a companion, not necessarily for protection.</label>
-		              <select class="ui dropdown left icon" name="Level of Protection" ng-model="users.protectiveBreed">
-		                <option value="">Select the best answer</option>
-		                <option value="I want a dog for protection">1. Very much like me</option>
-		                <option value="Some amount of vigilence is good">2. Somewhat like me</option>
-		                <option value="I just want my dog to be my pet, no protection is necessary">3. Not like me at all</option>
-		              </select>
-		          </div>    
-		          
-		          
-		          <div class="question6">
-		            <label>I do not have small children in the home (under 7).</label>
-		              <select class="ui dropdown left icon" name="No small children" ng-model="users.olderChildren">
-		                <option value="">Select the best answer</option>
-		                <option value="Children over 7 years">1. Very much like me</option>
-		                <option value="Some young children in the home">2. Somewhat like me</option>
-		                <option value="Children are under 7 years">3. Not like me at all</option>
-		              </select>
-		          </div>  
-		          
-		          <div class="question7">
-		            <label>Grown up with dogs most of my life.</label>
-		              <select class="ui dropdown left icon" name="Dog Experience" ng-model="users.dogExperience">
-		                <option value="">Select the best answer</option>
-		                <option value="Had dogs all my life">1. Very much like me</option>
-		                <option value="Had some interaction with dogs, but not too much">2. Somewhat like me</option>
-		                <option value="Kind of new having a pet">3. Not like me at all</option>
-		              </select>
-		          </div>    
-		          
-		          <button class="ui teal submit button">Submit Your Answers</button>
-		        </div>
-		      </form>
-		    </div> <!-- close search div -->
-
-          
-    <ul>
-      <li ng-repeat="dog in users.searchList">
-        <div class="center-card">
-          <div class="ui card raised segment">
-            <div class="image">
-              <img src="{{dog.media.photos.photo[2].$t}}">
-            </div>
-            <div class="content">
-              <a class="header">Meet <i>{{dog.name.$t}}</i></a>
-              <div class="meta">
-                <span class="date"><strong>Age:</strong> {{dog.age.$t}}</span><br>
-                <span class="date"><strong>Breed:</strong> {{dog.breeds.breed}}</span>
-              </div>
-              <div class="description">
-                <strong>Description:</strong> {{dog.description.$t}}
-              </div>
-            </div>
-            <div class="extra content">
-              <strong>Email for more info:</strong> <a href="mailto:{{dog.contact.email.$t}}">{{dog.contact.email.$t}}</a><br>
-              <strong>View on Petfinder:</strong> <a href="http://www.petfinder.com/petdetail/{{dog.id.$t}}" target="_blank">Sponsor me! Better yet, adopt me!</a>
-            </div>
-          </div>
-        </div>
-        <br>        
-      </li>
-    </ul>
+    
 
 	</div>
 
-  </body>
+ 
+
+</body>
 </html>
